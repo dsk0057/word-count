@@ -1,5 +1,6 @@
 package com.tlglearning.wordcount;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,11 +52,14 @@ public class WordCounter {
   }
 
   void countWords(String[] words) {
-    for(String word: words) {
-      counts.put(word, get(word) + 1);
-      totalWords++;
+    Arrays
+        .stream(words)
+        .map(String::trim)
+        .filter((s) -> !s.isEmpty())
+        .filter((s) -> s.length() > 5)
+        .filter((s) -> !Set.of("and", "of", "the", "in", "on", "i", "then", "than", "out", "a", "if").contains(s))
+        .forEach((word) -> counts.put(word, 1 + counts.getOrDefault(word, 0)));
     }
   }
 
 
-}
