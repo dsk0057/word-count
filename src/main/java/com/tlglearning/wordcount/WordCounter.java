@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class WordCounter {
 
+  private static final Set<String> BORING_WORDS = Set.of("and", "of", "the", "in", "on", "i", "then", "than", "out", "a", "if");
+
   private final Map<String, Integer> counts = new HashMap<>();
 
   private int totalWords;
@@ -55,11 +57,10 @@ public class WordCounter {
     Arrays
         .stream(words)
         .map(String::trim)
-        .filter((s) -> !s.isEmpty())
-        .filter((s) -> s.length() > 5)
-        .filter((s) -> !Set.of("and", "of", "the", "in", "on", "i", "then", "than", "out", "a", "if").contains(s))
+        .filter((word) -> !word.isEmpty())
+        .filter((word) -> word.length() > 5)
+//        .filter(Predicate.not(String::isEmpty))
         .forEach((word) -> counts.put(word, 1 + counts.getOrDefault(word, 0)));
-    }
   }
 
-
+}
